@@ -38,5 +38,4 @@ $ hexo deploy
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
 
 
-# 第一章
-哈哈哈哈哈
+**markdown数学公式**：https://www.jianshu.com/p/83f18a70378b
