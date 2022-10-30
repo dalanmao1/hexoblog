@@ -27,13 +27,13 @@ title: BP神经网络
 
 BP神经网络是一种典型的非线性算法。BP神经网络由**输入层、输出层和之间若干层（一层或多层）隐含层**构成，每一层可以有若干个节点。层与层之间节点的连接状态通过权重来体现。
 
-![](https://img-blog.csdnimg.cn/1c40769c8cc94820a1d15aadf765a0a3.png#pic_center=60x60)
+![](https://img-blog.csdnimg.cn/1c40769c8cc94820a1d15aadf765a0a3.png#pic_center)
 
 ### 2.1 感知器
 
 上图可以看到BP神经网络时由一个个节点和线连接起来组成的网络，组成这个网络的单元就叫**感知器**。
 
-![](https://img-blog.csdnimg.cn/f2233f14be9542bdac84b8076e71f00b.png#pic_center=60x60)
+![](https://img-blog.csdnimg.cn/f2233f14be9542bdac84b8076e71f00b.png#pic_center)
 
 感知器的结构由输入项$x_i$、权重$w_i$、偏置$\theta$、激活函数$f(\cdot)$、输出$y$组成。其中偏置和激活函数可能不太好理解为什么要把它们放在里面。
 
@@ -158,19 +158,23 @@ $$
 $$
 先看前半部分，因为隐藏层的输出为$z_k=f(S_k)$**（如果看不明白，最好把正向传播的公式抄下来对着看）**，可以展开为：
 $$
-\begin{cases}
-\frac{\partial E}{\partial S_{k}}=\frac{\partial E}{\partial z_{k}} \frac{\partial z_{k}}{\partial S_{k}}\\
-\frac{\partial S_{k}}{\partial v_{ki}}=x_i
-\end{cases}
+\left\{
+\begin{aligned}
+&\frac{\partial E}{\partial S_{k}}=\frac{\partial E}{\partial z_{k}} \frac{\partial z_{k}}{\partial S_{k}}\\
+&\frac{\partial S_{k}}{\partial v_{ki}}=x_i
+\end{aligned}\right.
 $$
 
 进一步展开：
 $$
-\begin{cases}
-\frac{\partial E}{\partial z_{k}}=\sum_{j=1}^{m}(y_j-t_j)\frac{\partial y_{j}}{\partial z_{k}}\\
-\frac{\partial z_k}{\partial S_{k}}=f_z'(S_k)
-\end{cases}
+\left\{
+\begin{aligned}
+&\frac{\partial E}{\partial z_{k}}=\sum_{j=1}^{m}(y_j-t_j)\frac{\partial y_{j}}{\partial z_{k}}\\
+&\frac{\partial z_k}{\partial S_{k}}=f_z'(S_k)
+\end{aligned}\right.
 $$
+
+
 其中$f_z'(S_k)$是隐藏层的激活函数的导数，$y_i$是输出层的输出，继续展开：
 $$
 \frac{\partial y_{j}}{\partial z_{k}}=\frac{\partial y_{j}}{\partial S_{j}}\frac{\partial S_{j}}{\partial z_{k}}=f'(S_j)\frac{\partial S_{j}}{\partial z_{k}}
@@ -186,18 +190,20 @@ $$
 $$
 最终，得到隐藏层和输出层的权值公式为：
 $$
-\begin{cases}
-\triangle \omega_{jk}=\eta(t_j-y_j)f'(S_j)z_k\\
-\triangle v_{ki}=\eta x_if_z'(S_k)(\sum_{j=1}^{m}(y_j-t_j)f'(S_j)\omega_{jk})
-\end{cases}
+\left\{
+\begin{aligned}
+&\triangle \omega_{jk}=\eta(t_j-y_j)f'(S_j)z_k\\
+&\triangle v_{ki}=\eta x_if_z'(S_k)(\sum_{j=1}^{m}(y_j-t_j)f'(S_j)\omega_{jk})
+\end{aligned}\right.
 $$
 两个权值有公共部分，可简化为：
 $$
-\begin{cases}
-\delta=(t_j-y_j)f'(S_j)\\
-\triangle \omega_{jk}=\eta\delta z_k\\
-\triangle v_{ki}=\eta x_if_z'(S_k)(\sum_{j=1}^{m}\delta\omega_{jk})
-\end{cases}
+\left\{
+\begin{aligned}
+&\delta=(t_j-y_j)f'(S_j)\\
+&\triangle \omega_{jk}=\eta\delta z_k\\
+&\triangle v_{ki}=\eta x_if_z'(S_k)(\sum_{j=1}^{m}\delta\omega_{jk})
+\end{aligned}\right.
 $$
 对公式中的符号再说明一下，$t_j$表示期望输出；$y_j$表示实际的输出，一般用输出层输出表示；$\eta$表示学习率；$z_k$表示隐藏层的输出；$x_i$表示输入层的输入（或输出）；$\omega_{jk}$表示隐藏层和输出层的权值；$S_{j}$和$S_{k}$分别为隐藏层和输出层的输入；$f_z'(\cdot)$和$f'(\cdot)$为隐藏层和输出层的激活函数。
 
